@@ -1,3 +1,21 @@
+<?php
+
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if(isset($_POST['login'])){
+        header('Location: login.php');
+        exit();
+    }
+    if(isset($_POST['logout'])){
+        header('Location: index.php');
+        session_unset();
+        session_destroy();
+        exit();
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,12 +60,30 @@
                             <span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span>
                             Cart
                         </a>
+
+                        <?php
+
+                            if(!isset($_SESSION['loginname'])){
+                                //echo "pas de \$_SESSION['loginname']";
+                                echo '<form method=\'post\'>';   
+                                echo '<input type=\'submit\' name=\'login\' value=\'Se connecter\'>';
+                                echo '</form>';
+                            }
+                            else {
+                                //echo $_SESSION['loginname'];
+                                echo '<form method=\'post\'>';   
+                                echo '<input type=\'submit\' name=\'logout\' value=\'Se deconnecter\' >';
+                                echo '</form>';
+                            }
+
+                        ?>
+
                     </li>
                 </ul>
             </div><!-- /.navbar-collapse -->
         </div><!-- /.container-fluid -->
     </nav>
     <div class="container-fluid text-right">
-        <strong>Hello Wilder !</strong>
+        <strong>Hello <?php echo isset($_SESSION['loginname']) ? $_SESSION['loginname'] : 'Wilder'; ?>!</strong>
     </div>
 </header>

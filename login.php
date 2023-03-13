@@ -1,3 +1,24 @@
+<?php
+    session_start();
+    
+    //l'utilisateur est deja connecter donc on le renvoie dans la page principale 
+     if(isset($_SESSION['loginname'])){
+         header('Location: index.php');
+         exit();
+     }
+
+    //on verifie qu'on a bien utiliser la methode post + que $_POST['loginname'] exit
+    //puis on retourne dans la page principale 
+    if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['loginname'])){
+        $_SESSION['loginname'] = $_POST['loginname'];
+        //echo "<br>";
+        //echo  "\$_SESSION['loginname'] = " . $_SESSION['loginname'];
+        header('Location: index.php');
+        exit();       
+    }
+?>
+
+
 <?php require 'inc/head.php'; ?>
 <div class="container" style="margin-top:40px">
     <div class="row">
